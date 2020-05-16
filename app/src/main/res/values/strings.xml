@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Locator</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="Invalid_phone">Please enter a valid phone no.</string>
+</resources>
