@@ -50,7 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     FirebaseAuth fauth;
     FirebaseFirestore fstore;
     Polyline polyline = null;
-    public static LatLng updated,currentlocation;
+    public static LatLng updated;
     public static String timeStamp;
 
     @Override
@@ -69,7 +69,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -86,13 +85,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
         // adding polylines
-        final PolylineOptions polylineOptions = new PolylineOptions()
-                .addAll(locationTrails).clickable(true);
-
+        final PolylineOptions polylineOptions = new PolylineOptions().addAll(locationTrails).clickable(true);
         polyline = googleMap.addPolyline(polylineOptions);
         polyline.setWidth(12f);
         currentLocation();
-        polylineOptions.add(currentlocation);
+        polylineOptions.add(updated);
         polyline = mMap.addPolyline(polylineOptions);
         polyline.setColor(Color.rgb(164,83,38));
         locationListener = new LocationListener() {
@@ -186,12 +183,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Location current = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             double lat = current.getLatitude();
             double lang = current.getLongitude();
-            currentlocation = new LatLng(lat,lang);
-            locationTrails.add(currentlocation);
-            MarkerOptions options = new MarkerOptions().position(currentlocation).title("TimeStamp: "+timeStamp);
+            updated = new LatLng(lat,lang);
+            locationTrails.add(updated);
+            MarkerOptions options = new MarkerOptions().position(updated).title("Start Time"+" "+timeStamp);
             options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             mMap.addMarker(options);
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentlocation,18.0f));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(updated,18.0f));
 
         }catch (SecurityException |  NullPointerException e ){
             e.printStackTrace();
